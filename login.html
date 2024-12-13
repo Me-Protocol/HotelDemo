@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollyhotel Hotel &amp; Resort HTML Template | Login</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/color.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="css/css2.css" rel="stylesheet">
+    <link href="assets/images/favicon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="assets/images/favicon.png" rel="icon" type="image/x-icon">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="main-header header-style-one">
+            <div class="header-top">
+              <div class="auto-container">
+                <div class="header-top-wrapper-box">
+                  <div class="header-top-left-column">
+                    <ul class="header-top-social-links">
+                      <li>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="header-top-right-column">
+                    <div class="header-top-text">
+                      Clock: Mon - Sat 8:00 - 6:30, Sunday - <span>CLOSED</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="header-upper">
+              <div class="auto-container">
+                <div class="inner-container">
+                  <div class="logo-box">
+                    <div class="logo">
+                      <a href="/html/"><img alt="" src="images/logo-dark.png"></a>
+                    </div>
+                  </div>
+                  <div class="nav-outer">
+                    <div class="mobile-nav-toggler">
+                      <img alt="" src="images/icon-bar.png">
+                    </div>
+                    <nav class="main-menu navbar-expand-md navbar-light">
+                      <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                        <ul class="navigation">
+                          <li class="dropdown">
+                            <a href="/html/">Home</a>
+                          </li>
+                          <li class="dropdown">
+                            <a href="#">Rooms</a>
+                          </li>
+                          <li class="dropdown">
+                            <a href="#">Blog</a>
+                          </li>
+                          <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                      </div>
+                    </nav>
+                  </div>
+                  <div class="right-column">
+                    <div class="navbar-right">
+                      <div class="link-btn">
+                        <a class="btn-one" href="login.html">Login <span></span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sticky-header">
+              <div class="header-upper">
+                <div class="auto-container">
+                  <div class="inner-container">
+                    <div class="logo-box">
+                      <div class="logo">
+                        <a href="/html/"><img alt="" src="images/logo-dark.png"></a>
+                      </div>
+                    </div>
+                    <div class="nav-outer">
+                      <div class="mobile-nav-toggler">
+                        <img alt="" src="images/icon-bar.png">
+                      </div>
+                      <nav class="main-menu navbar-expand-md navbar-light"></nav>
+                    </div>
+                    <div class="right-column">
+                      <div class="navbar-right">
+                        <div class="link-btn">
+                          <a class="btn-one" href="login.html">Login <span></span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mobile-menu">
+              <div class="menu-backdrop"></div>
+              <div class="close-btn"><i class="icon far fa-times"></i></div>
+              <nav class="menu-box">
+                <div class="nav-logo">
+                  <a href="/html/"><img alt="" src="images/logo-light.png" title=""></a>
+                </div>
+                <div class="menu-outer"></div>
+                <div class="social-links">
+                  <ul class="clearfix">
+                    <li>
+                      <a href="#"><span class="fab fa-twitter"></span></a>
+                    </li>
+                    <li>
+                      <a href="#"><span class="fab fa-facebook-square"></span></a>
+                    </li>
+                    <li>
+                      <a href="#"><span class="fab fa-pinterest-p"></span></a>
+                    </li>
+                    <li>
+                      <a href="#"><span class="fab fa-instagram"></span></a>
+                    </li>
+                    <li>
+                      <a href="#"><span class="fab fa-youtube"></span></a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+            <div class="nav-overlay">
+              <div class="cursor"></div>
+              <div class="cursor-follower"></div>
+            </div>
+        </header>
+        <section class="form-wrapper">
+            <h2>Login</h2>
+            <form>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label for="email">Password</label>
+                    <input type="password" id="password" placeholder="email address">
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="js/cdn.js"></script>
+    <script>
+        document.querySelector("button").addEventListener("click", (event) => {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            localStorage.setItem("email", email);
+            email.value = "";
+            password.value = ""
+            window.location.href = 'http://127.0.0.1:5500/index.html'
+        });
+    </script>
+</body>
+</html>
