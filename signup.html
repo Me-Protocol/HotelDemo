@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hollyhotel Hotel &amp; Resort HTML Template | Login</title>
+    <title>Hollyhotel Hotel &amp; Resort | Register</title>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/responsive.css" rel="stylesheet" />
@@ -90,9 +90,7 @@
               <div class="right-column">
                 <div class="navbar-right">
                   <div class="link-btn">
-                    <a class="btn-one" href="signup.html"
-                      >Register <span></span
-                    ></a>
+                    <a class="btn-one" href="login.html">Login <span></span></a>
                   </div>
                 </div>
               </div>
@@ -166,7 +164,7 @@
         </div>
       </header>
       <section class="form-wrapper">
-        <h2>Login</h2>
+        <h2>Register</h2>
         <form id="loginForm">
           <div class="form-group">
             <label for="email">Email Address</label>
@@ -176,7 +174,7 @@
             <label for="email">Password</label>
             <input type="password" id="password" placeholder="email address" />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit">Register</button>
         </form>
       </section>
     </div>
@@ -191,16 +189,73 @@
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
 
+          // Retrieve existing users from local storage or initialize as an empty array
           const existingUsers =
             JSON.parse(localStorage.getItem("existing-users")) || [];
 
+          // Check if the user already exists
           const userExists = existingUsers.includes(email);
 
           if (!userExists) {
-            window.alert(
-              "Account does not exist. You must register to continue."
+            // Add the new user to local storage
+            existingUsers.push(email);
+            localStorage.setItem(
+              "existing-users",
+              JSON.stringify(existingUsers)
+            );
+
+            const payload = {
+              user: {
+                id: "user1234",
+                email: email,
+                name: email,
+                createdAt: new Date().toISOString(),
+                lastLoginDate: new Date().toISOString(),
+                totalOrders: 0,
+                totalSpend: 0,
+                totalPoints: 0,
+                status: "active",
+              },
+              type: "sign_up",
+            };
+
+            try {
+              const apiKey = localStorage.getItem("apiKey");
+              // Make API call
+              const response = await fetch(
+                "http://localhost:1450/v1/api/earning/brand/event/push",
+                {
+                  method: "POST",
+                  headers: {
+                    accept: "*/*",
+                    "x-public-key": apiKey,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                  },
+                  body: JSON.stringify(payload),
+                }
+              );
+
+              if (!response.ok) {
+                throw new Error("Failed to log in. Please try again.");
+              }
+
+              const data = await response.json();
+              console.log("API Response:", data);
+            } catch (error) {
+              console.error("Error:", error);
+              alert("An error occurred during login.");
+              return;
+            }
+          } else {
+            console.log(
+              "User already exists in local storage. Skipping API call."
             );
           }
+
+          // Save email to local storage and redirect
+          localStorage.setItem("email", email);
+          window.location.href = "/index.html";
         });
     </script>
   </body>

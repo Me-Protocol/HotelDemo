@@ -90,7 +90,9 @@
               <div class="right-column">
                 <div class="navbar-right">
                   <div class="link-btn">
-                    <a class="btn-one" href="login.html">Login <span></span></a>
+                    <a id="login-btn" class="btn-one" href="login.html"
+                      >Login <span></span
+                    ></a>
                   </div>
                 </div>
               </div>
@@ -361,13 +363,15 @@
     <script
       src="https://cdn.jsdelivr.net/gh/Me-Protocol/mepaas-reward-cdn@main/cdn.js"
       id="mepaas-rewards"
-      api-key="your-meprotocol-public-api-key"
+      api-key="jgrixsley6eoul3isx7zx"
     ></script>
 
     <script>
       window.onload = function () {
+        localStorage.setItem("apiKey", "jgrixsley6eoul3isx7zx");
+        // Set customer data\
         const email = localStorage.getItem("email");
-        // console.log(email)
+
         if (email) {
           window.setCustomerData({
             email,
@@ -375,6 +379,16 @@
             firstName: "Name",
             lastName: "Last Name",
           });
+        }
+
+        const { customerData, apiKey } = window;
+        console.log("~~~~here~~~~", { customerData, apiKey });
+
+        if (email) {
+          const loginButton = document.getElementById("login-btn");
+          if (loginButton) {
+            loginButton.style.display = "none"; // Hide the element
+          }
         }
       };
     </script>
