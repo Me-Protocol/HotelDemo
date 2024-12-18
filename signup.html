@@ -255,6 +255,13 @@
 
           // Save email to local storage and redirect
           localStorage.setItem("email", email);
+
+          window.setCustomerData({
+            email,
+            id: "dfddd",
+            firstName: "Name",
+            lastName: "Last Name",
+          });
           window.location.href = "/index.html";
         });
     </script>
