@@ -253,7 +253,7 @@ for (const e of data) {
                     </div>
                   </div>
                   <div class="room-one-link-btn">
-                    <a class="btn-one s-four" href="/detail?id=${e.productIdOnBrandSite}"
+                    <a class="btn-one s-four" href="/detail.html?id=${e.productIdOnBrandSite}"
                       >Book Now + <span></span
                     ></a>
                   </div>
