@@ -361,7 +361,7 @@
     <script src="main.js"></script>
 
     <script
-      src="https://cdn.jsdelivr.net/gh/Me-Protocol/mepaas-reward-cdn@main/cdn.js"
+      src="/js/cdn.js"
       id="mepaas-rewards"
       api-key="qhkv8uiklcfdk83854m5q"
     ></script>
@@ -371,7 +371,6 @@
         localStorage.setItem("apiKey", "qhkv8uiklcfdk83854m5q");
         // Set customer data\
         const email = localStorage.getItem("email");
-
         if (email) {
           window.setCustomerData({
             email,
