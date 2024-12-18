@@ -879,7 +879,7 @@
             },
             order: {
               id: `order-${Date.now()}`, // Unique order ID
-              amount: parseFloat(totalAmount), // Use amount from HTML
+              amount: parseFloat(totalAmount.replace("$", "")), // Use amount from HTML
               isExternal: true,
             },
             type: "order",
