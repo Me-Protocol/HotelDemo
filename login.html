@@ -201,6 +201,9 @@
               "Account does not exist. You must register to continue."
             );
           }
+          localStorage.setItem("email", email);
+
+          window.location.href = "/index.html";
         });
     </script>
   </body>
