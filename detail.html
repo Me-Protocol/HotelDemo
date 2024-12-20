@@ -321,22 +321,31 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="promoCode">Promo Code</label>
                     <input
-                      type="email"
-                      id="email"
+                      type="text"
+                      id="promoCode"
                       placeholder="Enter promo code"
                     />
+                    <button
+                      type="button"
+                      id="applyPromoBtn"
+                      class="btn-one"
+                      style="margin-top: 10px"
+                      onclick="applyPromoCode()"
+                    >
+                      Apply Promo Code
+                    </button>
+                    <button
+                      type="button"
+                      id="openModalBtn"
+                      class="btn-one"
+                      style="margin-top: 10px; width: 100%"
+                      onclick="openModal()"
+                    >
+                      Book Now<span></span>
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    id="openModalBtn"
-                    class="btn-one"
-                    style="margin-top: 10px; width: 100%"
-                    onclick="openModal()"
-                  >
-                    Book Now<span></span>
-                  </button>
                 </div>
               </form>
               <div class="search-widget">
@@ -476,7 +485,16 @@
                 </div>
                 <div class="room-one-price">
                   <div class="room-one-price-left-side">
-                    <div class="room-one-price-value">$ 5859.00</div>
+                    <!-- Original Price with optional strikethrough -->
+                    <div class="room-one-price-value">
+                      <span id="originalPrice" style="text-decoration: none"
+                        >$500.00</span
+                      >
+                      <span
+                        id="discountedPrice"
+                        style="font-weight: bold; color: red; display: none"
+                      ></span>
+                    </div>
                     <div class="room-one-price-label">
                       Starting price /Night
                     </div>
@@ -830,8 +848,8 @@
           text-align: center;
         "
       >
-        <p>Original Room Price: $500</p>
-        <p>Discount: $0</p>
+        <p>Original Room Price: <span id="originalPrice">$500</span></p>
+        <p>Discount: <span id="discountAmount">$0</span></p>
         <p>Total to pay: <span id="totalAmount">$500</span></p>
         <button
           type="button"
@@ -848,6 +866,8 @@
     <script>
       window.onload = function () {
         const modal = document.querySelector(".spend-modal");
+        const originalPrice = 500; // Set the base price
+        let discount = 0; // Variable to track the discount
 
         // Function to open modal
         window.openModal = () => {
@@ -859,11 +879,46 @@
           modal.style.display = "none";
         };
 
+        // Function to apply promo code
+        window.applyPromoCode = () => {
+          const promoCode = document.getElementById("promoCode").value.trim();
+          const originalPriceElement = document.getElementById("originalPrice");
+          const discountedPriceElement =
+            document.getElementById("discountedPrice");
+          const originalPrice = 500; // Base price
+
+          // Define coupon codes and their discounts
+          const promoCodes = {
+            SAVE10: 10, // $10 discount
+            SAVE20: 20, // $20 discount
+            HALFPRICE: originalPrice / 2, // 50% off
+          };
+
+          if (promoCode in promoCodes) {
+            const discount = promoCodes[promoCode];
+            const finalPrice = originalPrice - discount;
+
+            // Update prices dynamically
+            originalPriceElement.style.textDecoration = "line-through"; // Add strikethrough
+            discountedPriceElement.style.display = "inline"; // Show discounted price
+            discountedPriceElement.textContent = `$${finalPrice.toFixed(2)}`; // Format to two decimals
+
+            alert("Promo code applied successfully!");
+          } else {
+            // Reset prices if invalid code
+            originalPriceElement.style.textDecoration = "none";
+            discountedPriceElement.style.display = "none";
+
+            alert("Invalid promo code. Please try again.");
+          }
+        };
+
         // Function to confirm order and send API call
         window.confirmOrder = async () => {
           const email = localStorage.getItem("email");
-          const totalAmount =
-            document.getElementById("totalAmount").textContent;
+          const totalAmount = parseFloat(
+            document.getElementById("totalAmount").textContent.replace("$", "")
+          );
 
           const payload = {
             user: {
@@ -879,7 +934,7 @@
             },
             order: {
               id: `order-${Date.now()}`, // Unique order ID
-              amount: parseFloat(totalAmount.replace("$", "")), // Use amount from HTML
+              amount: totalAmount, // Use updated amount
               isExternal: true,
             },
             type: "order",
