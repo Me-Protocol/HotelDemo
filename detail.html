@@ -27,6 +27,8 @@
       id="mepaas-rewards"
       api-key="y3krjw44aq7kkwixupd0j"
     ></script>
+    <script src="iniit.js"></script>
+
     <style>
       .openModal {
         display: flex !important;
@@ -869,6 +871,16 @@
         const originalPrice = 500;
         let discount = 0;
 
+        const email = localStorage.getItem("email");
+        if (email) {
+          window.setCustomerData({
+            email,
+            id: `${Date.now()}`,
+            firstName: email,
+            lastName: "Last Name",
+          });
+        }
+
         window.openModal = () => {
           modal.style.display = "flex";
         };
@@ -877,7 +889,7 @@
           modal.style.display = "none";
         };
 
-        window.applyPromoCode = () => {
+        window.applyPromoCode = async () => {
           const promoCode = document.getElementById("promoCode").value.trim();
           const originalPriceElement = document.getElementById("originalPrice");
           const discountedPriceElement =
@@ -885,41 +897,82 @@
           const discountAmountElement =
             document.getElementById("discountAmount");
           const totalAmountElement = document.getElementById("totalAmount");
-          const originalPrice = 500; // Base price for the room
+          const originalPrice = 500; // Base price
 
-          // Define promo codes and their discounts
-          const promoCodes = {
-            SAVE10: 10, // $10 discount
-            SAVE20: 20, // $20 discount
-            HALFPRICE: originalPrice / 2, // 50% discount
+          // Extract idOnBrandSite from the "id" query parameter in the URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const idOnBrandSite = urlParams.get("id");
+
+          if (!idOnBrandSite) {
+            alert("Product ID is missing from the URL.");
+            return;
+          }
+
+          if (!promoCode) {
+            alert("Please enter a promo code.");
+            return;
+          }
+
+          const payload = {
+            code: promoCode,
+            idOnBrandSite, // Use the extracted idOnBrandSite
           };
+          const apiKey = localStorage.getItem("apiKey");
 
-          if (promoCode in promoCodes) {
-            const discount = promoCodes[promoCode];
-            const finalPrice = originalPrice - discount;
+          try {
+            const response = await fetch(
+              "https://api.meappbounty.com/order/use-coupon/external",
+              {
+                method: "POST",
+                headers: {
+                  accept: "*/*",
+                  "x-public-key": apiKey,
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify(payload),
+              }
+            );
 
-            // Update original price display with strikethrough
-            originalPriceElement.style.textDecoration = "line-through";
+            if (!response.ok) {
+              throw new Error("Failed to validate the promo code.");
+            }
 
-            // Update discounted price display
-            discountedPriceElement.style.display = "inline";
-            discountedPriceElement.textContent = `$${finalPrice.toFixed(2)}`;
+            const data = await response.json();
+            const redemptionMethod = data.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
+            const discountAmount =
+              redemptionMethod === "FIXED_AMOUNT_OFF"
+                ? data.discountAmount
+                : redemptionMethod === "FIXED_PERCENTAGE_OFF"
+                ? (data.discountPercentage / 100) * originalPrice
+                : 0;
 
-            // Update total amount and discount amount
-            discountAmountElement.textContent = `$${discount.toFixed(2)}`;
-            totalAmountElement.textContent = `$${finalPrice.toFixed(2)}`;
+            if (discountAmount > 0) {
+              const finalPrice = Math.max(originalPrice - discountAmount, 0); // Ensure no negative prices
 
-            alert("Promo code applied successfully!");
-          } else {
-            // Reset if invalid promo code
+              // Apply styles to reflect the discount
+              originalPriceElement.style.textDecoration = "line-through";
+              discountedPriceElement.style.display = "inline";
+              discountedPriceElement.textContent = `$${finalPrice.toFixed(2)}`;
+              discountAmountElement.textContent = `$${discountAmount.toFixed(
+                2
+              )}`;
+              totalAmountElement.textContent = `$${finalPrice.toFixed(2)}`;
+
+              alert("Promo code applied successfully!");
+            } else {
+              throw new Error("Invalid promo code or no discount available.");
+            }
+          } catch (error) {
+            // Reset prices and styles on error
             originalPriceElement.style.textDecoration = "none";
             discountedPriceElement.style.display = "none";
-
-            // Reset discount and total amount
             discountAmountElement.textContent = `$0.00`;
             totalAmountElement.textContent = `$${originalPrice.toFixed(2)}`;
-
-            alert("Invalid promo code. Please try again.");
+            alert(
+              error.message ||
+                "An error occurred while validating the promo code."
+            );
           }
         };
 
@@ -950,8 +1003,6 @@
           };
 
           try {
-            const apiKey = localStorage.getItem("apiKey");
-
             // Make API call
             const response = await fetch(
               "https://paas.meappbounty.com/v1/api/earning/brand/event/push",
