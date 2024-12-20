@@ -866,54 +866,63 @@
     <script>
       window.onload = function () {
         const modal = document.querySelector(".spend-modal");
-        const originalPrice = 500; // Set the base price
-        let discount = 0; // Variable to track the discount
+        const originalPrice = 500;
+        let discount = 0;
 
-        // Function to open modal
         window.openModal = () => {
           modal.style.display = "flex";
         };
 
-        // Function to close modal
         window.closeModal = () => {
           modal.style.display = "none";
         };
 
-        // Function to apply promo code
         window.applyPromoCode = () => {
           const promoCode = document.getElementById("promoCode").value.trim();
           const originalPriceElement = document.getElementById("originalPrice");
           const discountedPriceElement =
             document.getElementById("discountedPrice");
-          const originalPrice = 500; // Base price
+          const discountAmountElement =
+            document.getElementById("discountAmount");
+          const totalAmountElement = document.getElementById("totalAmount");
+          const originalPrice = 500; // Base price for the room
 
-          // Define coupon codes and their discounts
+          // Define promo codes and their discounts
           const promoCodes = {
             SAVE10: 10, // $10 discount
             SAVE20: 20, // $20 discount
-            HALFPRICE: originalPrice / 2, // 50% off
+            HALFPRICE: originalPrice / 2, // 50% discount
           };
 
           if (promoCode in promoCodes) {
             const discount = promoCodes[promoCode];
             const finalPrice = originalPrice - discount;
 
-            // Update prices dynamically
-            originalPriceElement.style.textDecoration = "line-through"; // Add strikethrough
-            discountedPriceElement.style.display = "inline"; // Show discounted price
-            discountedPriceElement.textContent = `$${finalPrice.toFixed(2)}`; // Format to two decimals
+            // Update original price display with strikethrough
+            originalPriceElement.style.textDecoration = "line-through";
+
+            // Update discounted price display
+            discountedPriceElement.style.display = "inline";
+            discountedPriceElement.textContent = `$${finalPrice.toFixed(2)}`;
+
+            // Update total amount and discount amount
+            discountAmountElement.textContent = `$${discount.toFixed(2)}`;
+            totalAmountElement.textContent = `$${finalPrice.toFixed(2)}`;
 
             alert("Promo code applied successfully!");
           } else {
-            // Reset prices if invalid code
+            // Reset if invalid promo code
             originalPriceElement.style.textDecoration = "none";
             discountedPriceElement.style.display = "none";
+
+            // Reset discount and total amount
+            discountAmountElement.textContent = `$0.00`;
+            totalAmountElement.textContent = `$${originalPrice.toFixed(2)}`;
 
             alert("Invalid promo code. Please try again.");
           }
         };
 
-        // Function to confirm order and send API call
         window.confirmOrder = async () => {
           const email = localStorage.getItem("email");
           const totalAmount = parseFloat(
