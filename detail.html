@@ -940,10 +940,11 @@
             const data = await response.json();
             const redemptionMethod = data.data?.order?.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
             const discountAmount =
-              redemptionMethod === "FIXED_AMOUNT_OFF"
-                ? Number(data.discountAmount)
-                : redemptionMethod === "FIXED_PERCENTAGE_OFF"
-                ? (Number(data.discountPercentage) / 100) * originalPrice
+              redemptionMethod.type === "FIXED_AMOUNT_OFF"
+                ? Number(redemptionMethod?.discountAmount)
+                : redemptionMethod.type === "FIXED_PERCENTAGE_OFF"
+                ? (Number(redemptionMethod?.discountPercentage) / 100) *
+                  originalPrice
                 : 0;
 
             if (discountAmount > 0) {
