@@ -941,9 +941,9 @@
             const redemptionMethod = data.data?.order?.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
             const discountAmount =
               redemptionMethod === "FIXED_AMOUNT_OFF"
-                ? data.discountAmount
+                ? Number(data.discountAmount)
                 : redemptionMethod === "FIXED_PERCENTAGE_OFF"
-                ? (data.discountPercentage / 100) * originalPrice
+                ? (Number(data.discountPercentage) / 100) * originalPrice
                 : 0;
 
             if (discountAmount > 0) {
