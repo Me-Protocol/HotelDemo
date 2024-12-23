@@ -938,7 +938,9 @@
             }
 
             const data = await response.json();
-            const redemptionMethod = data.data?.order?.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
+            const redemptionMethod =
+              data?.data?.coupon?.order?.redemptionMethod;
+
             const discountAmount =
               redemptionMethod.type === "FIXED_AMOUNT_OFF"
                 ? Number(redemptionMethod?.discountAmount)
