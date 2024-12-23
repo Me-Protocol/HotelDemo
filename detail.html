@@ -939,7 +939,7 @@
             }
 
             const data = await response.json();
-            const redemptionMethod = data.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
+            const redemptionMethod = data.order.redemptionMethod; // 'FIXED_AMOUNT_OFF' or 'FIXED_PERCENTAGE_OFF'
             const discountAmount =
               redemptionMethod === "FIXED_AMOUNT_OFF"
                 ? data.discountAmount
