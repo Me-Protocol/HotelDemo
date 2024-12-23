@@ -983,6 +983,7 @@
           const totalAmount = parseFloat(
             document.getElementById("totalAmount").textContent.replace("$", "")
           );
+          const apiKey = localStorage.getItem("apiKey");
 
           const payload = {
             user: {
