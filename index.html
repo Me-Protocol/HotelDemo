@@ -371,14 +371,8 @@
         localStorage.setItem("apiKey", "y3krjw44aq7kkwixupd0j");
         // Set customer data\
         const email = localStorage.getItem("email");
-        if (email) {
-          window.setCustomerData({
-            email,
-            id: `${Date.now()}`,
-            firstName: email,
-            lastName: "",
-          });
-        }
+        window.email = email;
+        window.apiKey = "y3krjw44aq7kkwixupd0j";
 
         const { customerData, apiKey } = window;
         console.log("~~~~here~~~~", { customerData, apiKey });
