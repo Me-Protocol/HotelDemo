@@ -186,7 +186,7 @@
       </section>
     </div>
 
-    <!-- <script src="js/cdn.js"></script> -->
+    <script src="js/cdn.js"></script>
     <script>
       document
         .getElementById("loginForm")
@@ -209,21 +209,21 @@
           }
           localStorage.setItem("email", email);
 
-          window.setCustomerData({
-            email,
-            id: `${Date.now()}`,
-            firstName: email,
-            lastName: "Last Name",
-          });
+          // window.setCustomerData({
+          //   email,
+          //   id: `${Date.now()}`,
+          //   firstName: email,
+          //   lastName: "Last Name",
+          // });
 
           window.location.href = "/index.html";
 
-          window.setCustomerData({
-            email,
-            id: `${Date.now()}`,
-            firstName: email,
-            lastName: "Last Name",
-          });
+          // window.setCustomerData({
+          //   email,
+          //   id: `${Date.now()}`,
+          //   firstName: email,
+          //   lastName: "Last Name",
+          // });
         });
     </script>
   </body>

@@ -872,12 +872,14 @@
 
         const email = localStorage.getItem("email");
         if (email) {
-          window.setCustomerData({
-            email,
-            id: `${Date.now()}`,
-            firstName: email,
-            lastName: "Last Name",
-          });
+          window.customerEmail = email;
+          window.apiKey = localStorage.getItem("apiKey");
+          // window.setCustomerData({
+          //   email,
+          //   id: `${Date.now()}`,
+          //   firstName: email,
+          //   lastName: "Last Name",
+          // });
         }
 
         window.openModal = () => {

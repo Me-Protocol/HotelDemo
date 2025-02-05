@@ -371,11 +371,11 @@
         localStorage.setItem("apiKey", "y3krjw44aq7kkwixupd0j");
         // Set customer data\
         const email = localStorage.getItem("email");
-        window.email = email;
+        window.customerEmail = email;
         window.apiKey = "y3krjw44aq7kkwixupd0j";
 
-        const { customerData, apiKey } = window;
-        console.log("~~~~here~~~~", { customerData, apiKey });
+        const { customerEmail, apiKey } = window;
+        console.log("~~~~here~~~~", { customerEmail, apiKey });
 
         if (email) {
           const loginButton = document.getElementById("login-btn");
