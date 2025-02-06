@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function constructIframeUrl() {
-      return `https://mepass-rewards-dev.vercel.app?apiKey=${apiKey}${offerData ? `&offerData=${encodeURIComponent(JSON.stringify(offerData))}` : ""}`;
+      return `https://mepass-rewards-dev.vercel.app?apiKey=${apiKey}${offerData ? `&offerData=${encodeURIComponent(JSON.stringify(offerData))}${window.productId ? `&productId=${window.productId}` : ""}` : ""}`;
     }
 
     const button = document.createElement("button");
